@@ -1,0 +1,11 @@
+﻿{
+  "provider": "python",
+  "deploy": {
+    "startCommand": "gunicorn config.wsgi:application",
+    "inputs": [
+      {
+        "step": "build"
+      }
+    ]
+  }
+}
