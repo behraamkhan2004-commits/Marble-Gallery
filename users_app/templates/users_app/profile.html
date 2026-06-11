@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h1 class="profile-name">{{ user.get_full_name|default:user.username }}</h1>
+            <p class="profile-email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+            <p class="profile-member">Member since {{ user.date_joined|date:"F d, Y" }}</p>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Menu -->
+            <div class="col-lg-3">
+                <div class="profile-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="/users/profile/" class="menu-item active">
+                            <i class="fas fa-id-card"></i> My Profile
+                        </a>
+                        <a href="/orders/history/" class="menu-item">
+                            <i class="fas fa-shopping-bag"></i> My Orders
+                        </a>
+                        <a href="/wishlist/" class="menu-item">
+                            <i class="fas fa-heart"></i> Wishlist
+                        </a>
+                        <a href="/users/change-password/" class="menu-item">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
+                        <a href="/users/logout/" class="menu-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <div class="profile-content">
+                    <h2 class="content-title">Profile Information</h2>
+                    
+                    <div class="info-card">
+                        <div class="info-row">
+                            <div class="info-label">
+                                <i class="fas fa-user"></i> Full Name
+                            </div>
+                            <div class="info-value">
+                                {{ user.get_full_name|default:"Not provided" }}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">
+                                <i class="fas fa-user-tag"></i> Username
+                            </div>
+                            <div class="info-value">
+                                {{ user.username }}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </div>
+                            <div class="info-value">
+                                {{ user.email }}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </div>
+                            <div class="info-value">
+                                {{ user.phone_number|default:"Not provided" }}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">
+                                <i class="fas fa-calendar-alt"></i> Member Since
+                            </div>
+                            <div class="info-value">
+                                {{ user.date_joined|date:"F d, Y" }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <a href="/users/profile/edit/" class="btn-edit">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                        <a href="/orders/history/" class="btn-orders">
+                            <i class="fas fa-shopping-bag"></i> View Orders
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-page {
+        background: #f5f7fa;
+        min-height: 100vh;
+        padding: 40px 0 60px;
+    }
+
+    /* Profile Header */
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+    }
+
+    .profile-avatar i {
+        font-size: 60px;
+        color: white;
+    }
+
+    .profile-name {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 8px;
+    }
+
+    .profile-email {
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .profile-email i {
+        color: #c9a03d;
+        margin-right: 5px;
+    }
+
+    .profile-member {
+        color: #888;
+        font-size: 13px;
+    }
+
+    /* Sidebar */
+    .profile-sidebar {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 100px;
+    }
+
+    .sidebar-menu {
+        padding: 10px 0;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s;
+        border-left: 3px solid transparent;
+    }
+
+    .menu-item i {
+        width: 22px;
+        color: #888;
+        transition: all 0.3s;
+    }
+
+    .menu-item:hover {
+        background: #f5f0e6;
+        color: #c9a03d;
+    }
+
+    .menu-item:hover i {
+        color: #c9a03d;
+    }
+
+    .menu-item.active {
+        background: #f5f0e6;
+        border-left-color: #c9a03d;
+        color: #c9a03d;
+    }
+
+    .menu-item.active i {
+        color: #c9a03d;
+    }
+
+    .menu-item.logout {
+        color: #dc3545;
+    }
+
+    .menu-item.logout i {
+        color: #dc3545;
+    }
+
+    .menu-item.logout:hover {
+        background: #f8d7da;
+        color: #dc3545;
+    }
+
+    /* Main Content */
+    .profile-content {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .content-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .info-card {
+        margin-bottom: 30px;
+    }
+
+    .info-row {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-label {
+        width: 140px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .info-label i {
+        color: #c9a03d;
+        width: 25px;
+        margin-right: 5px;
+    }
+
+    .info-value {
+        flex: 1;
+        color: #333;
+    }
+
+    .profile-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn-edit, .btn-orders {
+        padding: 12px 25px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background: #c9a03d;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #a8862c;
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-orders {
+        background: #f5f5f5;
+        color: #333;
+    }
+
+    .btn-orders:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .profile-header {
+            padding: 20px;
+        }
+        .profile-name {
+            font-size: 22px;
+        }
+        .info-row {
+            flex-direction: column;
+            gap: 5px;
+        }
+        .info-label {
+            width: 100%;
+        }
+        .profile-actions {
+            flex-direction: column;
+        }
+        .btn-edit, .btn-orders {
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}

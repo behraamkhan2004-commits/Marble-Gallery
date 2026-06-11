@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Gallery Header -->
+<section class="gallery-header">
+    <div class="container">
+        <h1 class="gallery-title">Our Marble Gallery</h1>
+        <p class="gallery-subtitle">Explore our exquisite collection of premium marble</p>
+    </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="gallery-section">
+    <div class="container">
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="gallery-card">
+                    <div class="gallery-image-wrapper">
+                        {% if product.main_image %}
+                            <img src="{{ product.main_image.url }}" alt="{{ product.name_en }}" class="gallery-image">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="{{ product.name_en }}" class="gallery-image">
+                        {% endif %}
+                        <div class="gallery-overlay">
+                            <h4>{{ product.name_en }}</h4>
+                            <p>{{ product.color }} | {{ product.finish }}</p>
+                            <a href="/product/{{ product.slug }}/" class="gallery-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="empty-gallery">
+                    <i class="fas fa-image fa-4x mb-3"></i>
+                    <h3>No Products Yet</h3>
+                    <p>Check back soon for our premium marble collection.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .gallery-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 60px 0 50px;
+        text-align: center;
+        color: white;
+        margin-bottom: 50px;
+    }
+    
+    .gallery-title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    
+    .gallery-subtitle {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+    
+    .gallery-section {
+        padding-bottom: 60px;
+        background: #f8f9fa;
+    }
+    
+    .gallery-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        height: 100%;
+    }
+    
+    .gallery-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+    
+    .gallery-image-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .gallery-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .gallery-card:hover .gallery-image {
+        transform: scale(1.05);
+    }
+    
+    .gallery-overlay {
+        padding: 15px;
+        text-align: center;
+        background: white;
+    }
+    
+    .gallery-overlay h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #1a1a2e;
+    }
+    
+    .gallery-overlay p {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+    
+    .gallery-btn {
+        display: inline-block;
+        padding: 6px 15px;
+        background: #c9a03d;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 12px;
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-btn:hover {
+        background: #a8862c;
+        color: white;
+    }
+    
+    .empty-gallery {
+        padding: 80px 20px;
+        text-align: center;
+        background: white;
+        border-radius: 20px;
+    }
+    
+    .empty-gallery i {
+        color: #c9a03d;
+    }
+    
+    @media (max-width: 768px) {
+        .gallery-title {
+            font-size: 32px;
+        }
+        .gallery-image {
+            height: 200px;
+        }
+    }
+</style>
+{% endblock %}

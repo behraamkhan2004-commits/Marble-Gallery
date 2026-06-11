@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">My Wishlist</h1>
+    
+    {% if wishlist_items %}
+    <div class="row">
+        {% for item in wishlist_items %}
+        <div class="col-md-3 mb-4">
+            <div class="card product-card h-100">
+                {% if item.product.main_image %}
+                    <img src="{{ item.product.main_image.url }}" class="product-img" style="height: 200px; width: 100%; object-fit: cover;">
+                {% else %}
+                    <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-img" style="height: 200px; width: 100%; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.product.name_en }}</h5>
+                    <p class="product-price text-gold fw-bold">PKR {{ item.product.price_per_sqft }}/sq.ft</p>
+                    <a href="/product/{{ item.product.slug }}/" class="btn btn-outline-gold w-100 mb-2">View Details</a>
+                    <a href="{% url 'products:remove_from_wishlist' item.product.id %}" class="btn btn-outline-danger w-100">Remove</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="far fa-heart fa-5x text-muted mb-4"></i>
+        <h3>Your wishlist is empty</h3>
+        <p class="text-muted">Save your favorite items here!</p>
+        <a href="/products/" class="btn btn-gold">Browse Products</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .product-card {
+        transition: all 0.3s;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+    .btn-gold {
+        background: #c9a03d;
+        color: white;
+    }
+    .btn-gold:hover {
+        background: #a8862c;
+        color: white;
+    }
+    .btn-outline-gold {
+        border: 2px solid #c9a03d;
+        color: #c9a03d;
+        background: transparent;
+    }
+    .btn-outline-gold:hover {
+        background: #c9a03d;
+        color: white;
+    }
+    .text-gold {
+        color: #c9a03d;
+    }
+</style>
+{% endblock %}

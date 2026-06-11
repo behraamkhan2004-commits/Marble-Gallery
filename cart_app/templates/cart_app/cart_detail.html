@@ -1,0 +1,606 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .cart-page {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+    
+    .cart-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    /* Page Title */
+    .cart-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 40px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .cart-title:after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        border-radius: 2px;
+    }
+    
+    /* Cart Items Card */
+    .cart-items-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Table Styles */
+    .cart-table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .cart-table thead tr {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    .cart-table th {
+        padding: 18px 20px;
+        color: white;
+        font-weight: 600;
+        font-size: 15px;
+        border: none;
+    }
+    
+    .cart-table td {
+        padding: 20px;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    /* Product Info */
+    .product-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .product-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        object-fit: cover;
+        background: #f5f5f5;
+    }
+    
+    .product-details h4 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 5px;
+    }
+    
+    .product-details p {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+    }
+    
+    /* Price and Quantity */
+    .product-price {
+        font-weight: 700;
+        color: #c9a03d;
+        font-size: 18px;
+    }
+    
+    .quantity-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .quantity-input {
+        width: 70px;
+        padding: 8px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .quantity-input:focus {
+        outline: none;
+        border-color: #c9a03d;
+    }
+    
+    .btn-update {
+        background: #f0f0f0;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .btn-update:hover {
+        background: #c9a03d;
+        color: white;
+    }
+    
+    .product-total {
+        font-weight: 800;
+        color: #1a1a2e;
+        font-size: 18px;
+    }
+    
+    .btn-remove {
+        background: none;
+        border: none;
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s;
+    }
+    
+    .btn-remove:hover {
+        color: #c82333;
+        transform: scale(1.1);
+    }
+    
+    /* Order Summary Card */
+    .summary-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        padding: 30px;
+        position: sticky;
+        top: 100px;
+    }
+    
+    .summary-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #c9a03d;
+        display: inline-block;
+    }
+    
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding: 8px 0;
+    }
+    
+    .summary-label {
+        color: #666;
+        font-weight: 500;
+    }
+    
+    .summary-value {
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+    
+    .total-row {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #e0e0e0;
+    }
+    
+    .total-row .summary-label,
+    .total-row .summary-value {
+        font-size: 20px;
+        font-weight: 800;
+        color: #c9a03d;
+    }
+    
+    /* Beautiful Coupon Section */
+    .coupon-wrapper {
+        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+        border: 1px solid #e0e0e0;
+        border-radius: 20px;
+        margin: 25px 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .coupon-wrapper:hover {
+        border-color: #c9a03d;
+        box-shadow: 0 5px 20px rgba(201,160,61,0.15);
+    }
+    
+    .coupon-header {
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: white;
+    }
+    
+    .coupon-header i {
+        font-size: 18px;
+    }
+    
+    .coupon-header span {
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+    
+    .coupon-body {
+        padding: 20px;
+    }
+    
+    .coupon-input-wrapper {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .coupon-input {
+        flex: 1;
+        padding: 14px 18px;
+        border: 2px solid #e8ecef;
+        border-radius: 50px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #fff;
+    }
+    
+    .coupon-input:focus {
+        outline: none;
+        border-color: #c9a03d;
+        box-shadow: 0 0 0 3px rgba(201,160,61,0.1);
+    }
+    
+    .coupon-apply-btn {
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        border: none;
+        padding: 14px 28px;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .coupon-apply-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(201,160,61,0.3);
+    }
+    
+    .coupon-message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    
+    .coupon-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border-left: 4px solid #28a745;
+    }
+    
+    .coupon-error {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+    
+    /* Buttons */
+    .btn-checkout {
+        width: 100%;
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        border: none;
+        padding: 16px;
+        border-radius: 50px;
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+    
+    .btn-checkout:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(201,160,61,0.3);
+    }
+    
+    .btn-continue {
+        width: 100%;
+        background: #f0f0f0;
+        border: none;
+        padding: 14px;
+        border-radius: 50px;
+        color: #666;
+        font-weight: 600;
+        margin-top: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+    
+    .btn-continue:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+    }
+    
+    /* Empty Cart */
+    .empty-cart {
+        text-align: center;
+        padding: 80px 40px;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    
+    .empty-cart i {
+        font-size: 100px;
+        color: #c9a03d;
+        margin-bottom: 25px;
+        opacity: 0.7;
+    }
+    
+    .empty-cart h3 {
+        font-size: 28px;
+        margin-bottom: 15px;
+        color: #1a1a2e;
+    }
+    
+    .empty-cart p {
+        color: #666;
+        margin-bottom: 30px;
+    }
+    
+    .btn-shop {
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        border: none;
+        padding: 14px 35px;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+    }
+    
+    .btn-shop:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(201,160,61,0.3);
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .cart-table th,
+        .cart-table td {
+            padding: 12px;
+        }
+        .product-info {
+            flex-direction: column;
+            text-align: center;
+        }
+        .product-image {
+            width: 60px;
+            height: 60px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .cart-title {
+            font-size: 32px;
+        }
+        .summary-card {
+            margin-top: 30px;
+        }
+        .coupon-input-wrapper {
+            flex-direction: column;
+        }
+        .coupon-apply-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="cart-page">
+    <div class="cart-container">
+        <h1 class="cart-title">Shopping Cart</h1>
+        
+        {% if cart|length > 0 %}
+        <div class="row g-4">
+            <!-- Cart Items Column -->
+            <div class="col-lg-8">
+                <div class="cart-items-card">
+                    <div class="table-responsive">
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart %}
+                                <tr>
+                                    <td>
+                                        <div class="product-info">
+                                            {% if item.product.main_image %}
+                                                <img src="{{ item.product.main_image.url }}" class="product-image" alt="{{ item.product.name_en }}">
+                                            {% else %}
+                                                <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="product-image" alt="{{ item.product.name_en }}">
+                                            {% endif %}
+                                            <div class="product-details">
+                                                <h4>{{ item.product.name_en }}</h4>
+                                                <p>{{ item.product.color }} | {{ item.product.finish }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-price">PKR {{ item.price }}/sq.ft</td>
+                                    <td>
+                                        <div class="quantity-wrapper">
+                                            <form method="post" action="/cart/update/{{ item.product.id }}/" style="display: flex; gap: 8px;">
+                                                {% csrf_token %}
+                                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input">
+                                                <button type="submit" class="btn-update">Update</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="product-total">PKR {{ item.total_price }}</td>
+                                    <td>
+                                        <a href="/cart/remove/{{ item.product.id }}/" class="btn-remove" onclick="return confirm('Remove this item?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary Column -->
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <div class="summary-title">Order Summary</div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value">PKR {{ cart.get_total_price }}</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Shipping</span>
+                        <span class="summary-value">Calculated at checkout</span>
+                    </div>
+                    
+                    <!-- Beautiful Coupon Section -->
+                    <div class="coupon-wrapper">
+                        <div class="coupon-header">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>Have a coupon?</span>
+                        </div>
+                        <div class="coupon-body">
+                            <div class="coupon-input-wrapper">
+                                <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
+                                <button class="coupon-apply-btn" onclick="applyCoupon()">
+                                    <i class="fas fa-check"></i> Apply
+                                </button>
+                            </div>
+                            <div id="couponMessage"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value">PKR {{ cart.get_total_price }}</span>
+                    </div>
+                    
+                    <a href="/orders/create/" class="btn-checkout">
+                        <i class="fas fa-credit-card"></i> Proceed to Checkout
+                    </a>
+                    
+                    <a href="/products/" class="btn-continue">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <h3>Your cart is empty</h3>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <a href="/products/" class="btn-shop">
+                <i class="fas fa-gem"></i> Start Shopping
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function applyCoupon() {
+    const code = document.getElementById('couponCode').value;
+    const messageDiv = document.getElementById('couponMessage');
+    
+    if (!code) {
+        messageDiv.innerHTML = '<div class="coupon-message coupon-error"><i class="fas fa-exclamation-circle me-2"></i> Please enter a coupon code</div>';
+        return;
+    }
+    
+    // Show loading state
+    const applyBtn = document.querySelector('.coupon-apply-btn');
+    const originalText = applyBtn.innerHTML;
+    applyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Applying...';
+    applyBtn.disabled = true;
+    
+    fetch('/orders/apply-coupon/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({code: code})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageDiv.innerHTML = '<div class="coupon-message coupon-success"><i class="fas fa-check-circle me-2"></i> ' + data.message + '</div>';
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            messageDiv.innerHTML = '<div class="coupon-message coupon-error"><i class="fas fa-times-circle me-2"></i> ' + data.message + '</div>';
+        }
+    })
+    .catch(error => {
+        messageDiv.innerHTML = '<div class="coupon-message coupon-error"><i class="fas fa-exclamation-triangle me-2"></i> Something went wrong. Please try again.</div>';
+    })
+    .finally(() => {
+        applyBtn.innerHTML = originalText;
+        applyBtn.disabled = false;
+    });
+}
+</script>
+{% endblock %}

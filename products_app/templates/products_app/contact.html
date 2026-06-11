@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="contact-page">
+    <!-- Hero Section -->
+    <div class="contact-hero">
+        <div class="container">
+            <h1 class="contact-hero-title">Get In Touch</h1>
+            <p class="contact-hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="row g-0">
+                <!-- Contact Info Side -->
+                <div class="col-lg-5">
+                    <div class="contact-info">
+                        <h2 class="info-title">Contact Information</h2>
+                        <p class="info-desc">Have questions about our marble products? Need a bulk quote? Our team is here to help.</p>
+                        
+                        <div class="info-items">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Visit Us</h4>
+                                    <p>Peshawar, Khyber Pakhtunkhwa<br>Pakistan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Call Us</h4>
+                                    <p>+92 315 8510208</p>
+                                    <p class="small">Mon-Fri, 9am to 6pm</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Email Us</h4>
+                                    <p>marblegallery2004@gmail.com</p>
+                                    <p class="small">We reply within 24 hours</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>WhatsApp</h4>
+                                    <p>+92 315 8510208</p>
+                                    <p class="small">Instant support</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form Side -->
+                <div class="col-lg-7">
+                    <div class="contact-form-wrapper">
+                        <h2 class="form-title">Send Us a Message</h2>
+                        
+                        <form method="post" class="contact-form">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Your Name *</label>
+                                        <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                                        <i class="fas fa-user input-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address *</label>
+                                        <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
+                                        <i class="fas fa-envelope input-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" name="phone" class="form-control" placeholder="03001234567">
+                                        <i class="fas fa-phone input-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Subject *</label>
+                                        <input type="text" name="subject" class="form-control" placeholder="What is this regarding?" required>
+                                        <i class="fas fa-tag input-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Message *</label>
+                                <textarea name="message" class="form-control message-input" rows="5" placeholder="Tell us how we can help you..."></textarea>
+                                <i class="fas fa-pencil-alt textarea-icon"></i>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div class="map-section">
+            <h3 class="map-title">Find Us Here</h3>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26450.22715037892!2d71.5143786!3d34.015565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d914ecf9ff36c9%3A0x2e3b0e5b8e9a4a0!2sPeshawar!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                    width="100%" 
+                    height="350" 
+                    style="border:0; border-radius: 20px;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contact-page {
+        background: #f5f7fa;
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .contact-hero {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 70px 0 60px;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .contact-hero-title {
+        font-size: 48px;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .contact-hero-subtitle {
+        font-size: 18px;
+        color: rgba(255,255,255,0.8);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Contact Wrapper */
+    .contact-wrapper {
+        background: white;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        margin-bottom: 60px;
+    }
+
+    /* Contact Info Side */
+    .contact-info {
+        background: linear-gradient(135deg, #1a1a2e 0%, #1e2740 100%);
+        padding: 50px 40px;
+        height: 100%;
+        color: white;
+    }
+
+    .info-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    .info-desc {
+        color: rgba(255,255,255,0.7);
+        line-height: 1.6;
+        margin-bottom: 35px;
+    }
+
+    .info-items {
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    .info-icon {
+        width: 55px;
+        height: 55px;
+        background: rgba(201,160,61,0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #c9a03d;
+        transition: all 0.3s;
+    }
+
+    .info-item:hover .info-icon {
+        background: #c9a03d;
+        color: #1a1a2e;
+    }
+
+    .info-content h4 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: white;
+    }
+
+    .info-content p {
+        color: rgba(255,255,255,0.7);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .info-content .small {
+        font-size: 13px;
+        color: rgba(255,255,255,0.5);
+    }
+
+    /* Contact Form Side */
+    .contact-form-wrapper {
+        padding: 50px 40px;
+        background: white;
+    }
+
+    .form-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 20px 14px 45px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 15px;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #c9a03d;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(201,160,61,0.1);
+    }
+
+    .message-input {
+        padding-left: 45px;
+        resize: vertical;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        color: #c9a03d;
+        font-size: 16px;
+    }
+
+    .textarea-icon {
+        position: absolute;
+        left: 15px;
+        top: 42px;
+        color: #c9a03d;
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(201,160,61,0.3);
+    }
+
+    /* Map Section */
+    .map-section {
+        margin-bottom: 60px;
+    }
+
+    .map-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 25px;
+    }
+
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .contact-hero-title {
+            font-size: 32px;
+        }
+        .contact-info, .contact-form-wrapper {
+            padding: 30px 25px;
+        }
+        .info-title, .form-title {
+            font-size: 24px;
+        }
+        .map-title {
+            font-size: 20px;
+        }
+    }
+</style>
+{% endblock %}

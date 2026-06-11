@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Bulk Order Request</h1>
+        <p class="lead text-muted">For builders, contractors, and commercial projects</p>
+        <p class="text-muted">Get special discounts on orders above 500 sq.ft</p>
+    </div>
+
+    <div class="row">
+        <!-- Bulk Order Form -->
+        <div class="col-md-7">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-dark text-white rounded-top-4">
+                    <h4 class="mb-0"><i class="fas fa-truck me-2"></i>Request Bulk Quote</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Company Name *</label>
+                                <input type="text" name="company_name" class="form-control" placeholder="Enter your company name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Contact Person *</label>
+                                <input type="text" name="contact_person" class="form-control" placeholder="Full name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Phone Number *</label>
+                                <input type="tel" name="phone" class="form-control" placeholder="03001234567" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Email *</label>
+                                <input type="email" name="email" class="form-control" placeholder="info@company.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Marble Type *</label>
+                                <select name="marble_type" class="form-select" required>
+                                    <option value="">Select Marble Type</option>
+                                    <option value="white_carrara">White Carrara Marble</option>
+                                    <option value="black_marquina">Black Marquina Marble</option>
+                                    <option value="golden_onyx">Golden Onyx Marble</option>
+                                    <option value="travertine">Travertine Marble</option>
+                                    <option value="emerald_green">Emerald Green Marble</option>
+                                    <option value="other">Other (Specify below)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Quantity (sq.ft) *</label>
+                                <input type="number" name="quantity" class="form-control" id="quantity" min="100" placeholder="Minimum 100 sq.ft" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Thickness (mm)</label>
+                                <select name="thickness" class="form-select">
+                                    <option value="16">16 mm</option>
+                                    <option value="18">18 mm</option>
+                                    <option value="20" selected>20 mm</option>
+                                    <option value="30">30 mm</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Finish Type</label>
+                                <select name="finish" class="form-select">
+                                    <option value="polished">Polished</option>
+                                    <option value="honed">Honed</option>
+                                    <option value="leather">Leather</option>
+                                    <option value="brushed">Brushed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Delivery City *</label>
+                                <input type="text" name="delivery_city" class="form-control" placeholder="Karachi, Lahore, Islamabad..." required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Expected Delivery Date</label>
+                                <input type="date" name="expected_date" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Delivery Address *</label>
+                            <textarea name="address" class="form-control" rows="2" placeholder="Complete delivery address" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Special Requirements</label>
+                            <textarea name="requirements" class="form-control" rows="3" placeholder="Any specific requirements, color variations, cutting needs, etc."></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Preferred Contact Method</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contact_method" value="phone" checked>
+                                    <label class="form-check-label">Phone Call</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contact_method" value="whatsapp">
+                                    <label class="form-check-label">WhatsApp</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contact_method" value="email">
+                                    <label class="form-check-label">Email</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info" id="discountInfo" style="display: none;">
+                            <i class="fas fa-gift me-2"></i>
+                            <span id="discountMessage"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-gold w-100 py-3 mt-3">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Bulk Order Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Information Sidebar -->
+        <div class="col-md-5">
+            <!-- Volume Discounts -->
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
+                <div class="card-header bg-success text-white rounded-top-4">
+                    <h4 class="mb-0"><i class="fas fa-gift me-2"></i>Volume Discounts</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr><th>Quantity (sq.ft)</th><th>Discount</th><th>Savings</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>100 - 499</td>
+                                    <td><span class="badge bg-info">5% OFF</span></td>
+                                    <td>Up to PKR 37,500</td>
+                                </tr>
+                                <tr class="table-success">
+                                    <td>500 - 999</td>
+                                    <td><span class="badge bg-success">10% OFF</span></td>
+                                    <td>Up to PKR 1,35,000</td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>1000 - 4999</td>
+                                    <td><span class="badge bg-warning">15% OFF</span></td>
+                                    <td>Up to PKR 11,25,000</td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <td>5000+</td>
+                                    <td><span class="badge bg-danger">20% OFF</span></td>
+                                    <td>Call for custom quote</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Estimated Price Calculator -->
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <h4 class="mb-0"><i class="fas fa-calculator me-2"></i>Estimate Your Cost</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Price per sq.ft</label>
+                        <select id="pricePerSqft" class="form-select">
+                            <option value="1500">White Carrara - PKR 1,500/sq.ft</option>
+                            <option value="1800">Black Marquina - PKR 1,800/sq.ft</option>
+                            <option value="2500">Golden Onyx - PKR 2,500/sq.ft</option>
+                            <option value="1200">Travertine - PKR 1,200/sq.ft</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity (sq.ft)</label>
+                        <input type="number" id="calcQuantity" class="form-control" placeholder="Enter quantity">
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Subtotal:</strong>
+                        <strong id="calcSubtotal">PKR 0</strong>
+                    </div>
+                    <div class="d-flex justify-content-between text-success">
+                        <span>Discount:</span>
+                        <span id="calcDiscount">0%</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Estimated Total:</strong>
+                        <strong class="text-gold" id="calcTotal">PKR 0</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Direct Contact -->
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-info text-white rounded-top-4">
+                    <h4 class="mb-0"><i class="fas fa-phone-alt me-2"></i>Direct Contact</h4>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                    <h5>Sales Team</h5>
+                    <p><i class="fas fa-phone me-2"></i>+92 315 8510208</p>
+                    <p><i class="fab fa-whatsapp me-2"></i>+92 315 8510208</p>
+                    <p><i class="fas fa-envelope me-2"></i>marblegallery2004@gmail.com</p>
+                    <hr>
+                    <p class="text-muted small">Response within 24 hours</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Calculate discount based on quantity
+    const quantityInput = document.getElementById('quantity');
+    const discountInfo = document.getElementById('discountInfo');
+    const discountMessage = document.getElementById('discountMessage');
+    
+    if (quantityInput) {
+        quantityInput.addEventListener('input', function() {
+            const qty = parseInt(this.value);
+            if (qty >= 100) {
+                let discount = 0;
+                let message = '';
+                
+                if (qty >= 5000) {
+                    discount = 20;
+                    message = '20% discount applied! Contact our sales team for custom pricing.';
+                } else if (qty >= 1000) {
+                    discount = 15;
+                    message = '15% discount applied! You save big on this bulk order.';
+                } else if (qty >= 500) {
+                    discount = 10;
+                    message = '10% discount applied! Great choice for bulk purchase.';
+                } else if (qty >= 100) {
+                    discount = 5;
+                    message = '5% discount applied! You qualify for bulk discount.';
+                }
+                
+                if (discount > 0) {
+                    discountInfo.style.display = 'block';
+                    discountMessage.innerHTML = `${message} Your estimated savings: ${discount}% on total amount.`;
+                } else {
+                    discountInfo.style.display = 'none';
+                }
+            } else {
+                discountInfo.style.display = 'none';
+            }
+        });
+    }
+    
+    // Calculator functionality
+    const priceSelect = document.getElementById('pricePerSqft');
+    const calcQty = document.getElementById('calcQuantity');
+    const calcSubtotal = document.getElementById('calcSubtotal');
+    const calcDiscount = document.getElementById('calcDiscount');
+    const calcTotal = document.getElementById('calcTotal');
+    
+    function updateCalculator() {
+        const price = parseInt(priceSelect.value);
+        const qty = parseInt(calcQty.value);
+        
+        if (!isNaN(qty) && qty > 0) {
+            const subtotal = price * qty;
+            let discountPercent = 0;
+            
+            if (qty >= 5000) discountPercent = 20;
+            else if (qty >= 1000) discountPercent = 15;
+            else if (qty >= 500) discountPercent = 10;
+            else if (qty >= 100) discountPercent = 5;
+            
+            const discountAmount = subtotal * discountPercent / 100;
+            const total = subtotal - discountAmount;
+            
+            calcSubtotal.innerHTML = `PKR ${subtotal.toLocaleString()}`;
+            calcDiscount.innerHTML = `${discountPercent}%`;
+            calcTotal.innerHTML = `PKR ${total.toLocaleString()}`;
+        } else {
+            calcSubtotal.innerHTML = 'PKR 0';
+            calcDiscount.innerHTML = '0%';
+            calcTotal.innerHTML = 'PKR 0';
+        }
+    }
+    
+    if (priceSelect && calcQty) {
+        priceSelect.addEventListener('change', updateCalculator);
+        calcQty.addEventListener('input', updateCalculator);
+    }
+</script>
+
+<style>
+    .btn-gold {
+        background: #c9a03d;
+        color: white;
+    }
+    .btn-gold:hover {
+        background: #a8862c;
+        color: white;
+    }
+    .text-gold {
+        color: #c9a03d;
+    }
+</style>
+{% endblock %}

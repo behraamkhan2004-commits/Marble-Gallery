@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <i class="fas fa-check-circle fa-5x text-success mb-4"></i>
+                    <h2 class="fw-bold mb-3">Payment Successful!</h2>
+                    <p class="lead">Your order has been confirmed.</p>
+                    <p>Order Number: <strong>{{ order_number }}</strong></p>
+                    <p>A confirmation email has been sent to your registered email address.</p>
+                    <hr>
+                    <a href="/orders/{{ order_id }}/" class="btn btn-primary">View Order Details</a>
+                    <a href="/" class="btn btn-outline-secondary ms-2">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

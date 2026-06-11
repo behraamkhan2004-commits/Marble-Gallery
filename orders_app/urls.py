@@ -1,0 +1,13 @@
+from django.urls import path
+from . import views
+
+app_name = 'orders'
+
+urlpatterns = [
+    path('create/', views.order_create, name='order_create'),
+    path('history/', views.order_history, name='order_history'),
+    path('<int:order_id>/', views.order_detail, name='order_detail'),
+    path('track/', views.track_order_page, name='track_order_page'),
+    path('invoice/<int:order_id>/', views.download_invoice, name='download_invoice'),
+    path('apply-coupon/', views.apply_coupon, name='apply_coupon'),
+]

@@ -1,0 +1,897 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marble Gallery - Premium Marble Stones in Pakistan</title>
+    <!-- Favicon - Your Custom MG Logo -->
+<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .luxury-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-container {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+}
+
+.logo-circle {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #D4AF37 0%, #F7EF8A 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon {
+    font-size: 24px;
+    color: #1a1a2e;
+}
+
+.logo-main {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #D4AF37 0%, #F7EF8A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+        .hero-section {
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+}
+/* Category Cards Fix */
+.category-card-luxury {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    height: 280px;
+}
+
+.category-card-luxury:hover {
+    transform: translateY(-8px);
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.category-card-luxury:hover .category-image {
+    transform: scale(1.05);
+}
+
+.category-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 20px;
+    text-align: center;
+}
+
+.category-title {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.category-subtitle {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .col-lg-3 {
+        width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .col-lg-3 {
+        width: 100%;
+    }
+}
+        /* Luxury Marble Theme */
+        :root {
+            --marble-white: #F8F5F0;
+            --marble-gold: #D4AF37;
+            --marble-dark: #2C2C2C;
+            --marble-gray: #8C8C8C;
+            --marble-beige: #E6D5B8;
+            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #F7EF8A 100%);
+            --box-shadow-luxury: 0 10px 30px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--marble-dark);
+            background: var(--marble-white);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(248, 245, 240, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(248, 245, 240, 0.98);
+        }
+
+        .luxury-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin-right: 15px;
+        }
+
+        .logo-circle {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--box-shadow-luxury);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color: var(--marble-dark);
+        }
+
+        .logo-main {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        .logo-sub {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--marble-gray);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .nav-link {
+            color: var(--marble-dark) !important;
+            font-weight: 500;
+            padding: 8px 20px !important;
+            margin: 0 5px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+        }
+        /* Cart Icon */
+.cart-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    color: var(--marble-dark);
+    font-size: 20px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.cart-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+    color: var(--marble-dark);
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* User Icon */
+.user-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--marble-gold);
+    border-radius: 40px;
+    color: var(--marble-dark);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.user-icon i {
+    font-size: 18px;
+    color: var(--marble-gold);
+}
+
+.user-icon:hover {
+    background: var(--gradient-gold);
+    border-color: transparent;
+    transform: translateY(-2px);
+}
+
+        .nav-link.active {
+            background: var(--gradient-gold);
+        }
+
+        /* Hero Section with Rotating Background */
+        .luxury-hero {
+            position: relative;
+            padding: 120px 0 80px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            transition: background-image 1.5s ease-in-out;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #F7EF8A, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-luxury {
+            background: var(--gradient-gold);
+            color: var(--marble-dark);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline-light {
+            border: 2px solid white;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background: white;
+            color: var(--marble-dark);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--marble-gold);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Section Styles */
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--gradient-gold);
+        }
+
+        /* Category Cards */
+        .category-card-luxury {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-luxury);
+            transition: all 0.3s ease;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+
+        .category-card-luxury:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card-luxury:hover .category-image {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .category-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Product Cards */
+        .product-card-luxury {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-luxury);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .product-card-luxury:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gradient-gold);
+            color: var(--marble-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .product-image-container {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card-luxury:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--marble-gold);
+            margin-bottom: 15px;
+        }
+
+        .product-rating {
+            color: var(--marble-gold);
+            margin-bottom: 15px;
+        }
+
+        /* Feature Cards */
+        .feature-card-luxury {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-luxury);
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card-luxury:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--marble-dark);
+        }
+
+        /* CTA Section */
+        .luxury-cta {
+            padding: 80px 0;
+            background: linear-gradient(rgba(44,44,44,0.9), rgba(44,44,44,0.9)), url('https://images.unsplash.com/photo-1544931170-3ca1337cce88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #F7EF8A, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Footer */
+        .luxury-footer {
+            background: var(--marble-dark);
+            color: var(--marble-beige);
+            padding: 60px 0 30px;
+        }
+
+        .footer-title {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--gradient-gold);
+        }
+
+        .footer-links a {
+            color: var(--marble-beige);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--marble-gold);
+            padding-left: 5px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            color: var(--marble-gold);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-gold);
+            color: var(--marble-dark);
+            transform: translateY(-3px);
+        }
+
+        .newsletter-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            width: 100%;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--marble-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+        }
+    </style>
+</head>
+<body>
+
+ <!-- Navigation -->
+  
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="luxury-logo" href="/">
+    <div class="logo-container">
+        <div class="logo-circle">
+            <i class="fas fa-gem logo-icon"></i>
+        </div>
+    </div>
+    <div class="logo-text">
+        <div class="logo-main">MARBLE GALLERY</div>
+    </div>
+</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="/" id="nav-home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about/" id="nav-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/gallery/" id="nav-gallery">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="/products/" id="nav-products">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="/quality/" id="nav-quality">Quality</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact/" id="nav-contact">Get Quote</a></li>
+            </ul>
+            
+            <!-- Cart Icon -->
+            <a href="/cart/" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+            
+            <!-- User Icon -->
+            <div class="dropdown d-inline-block ms-2">
+                <button class="user-icon" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name">{% if user.is_authenticated %}{{ user.username }}{% else %}Account{% endif %}</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="/users/profile/"><i class="fas fa-id-card me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="/orders/history/"><i class="fas fa-history me-2"></i>Orders</a></li>
+                        <li><a class="dropdown-item" href="/orders/track/"><i class="fas fa-map-marker-alt me-2"></i>Track Order</a></li>
+                        <li><a class="dropdown-item" href="/wishlist/"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/users/logout/"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="/users/login/"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li>
+                        <li><a class="dropdown-item" href="/users/register/"><i class="fas fa-user-plus me-2"></i>Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="luxury-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="luxury-logo mb-3">
+                        <div class="logo-container">
+                            <div class="logo-circle">
+                                <i class="fas fa-gem logo-icon"></i>
+                            </div>
+                        </div>
+                        <div class="logo-text">
+                            <div class="logo-main">MARBLE GALLERY</div>
+                            <div class="logo-sub">PAKISTAN</div>
+                        </div>
+                    </div>
+                    <p>Pakistan's premier marble marketplace, connecting premium suppliers with discerning clients since 2008.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/about/">About Us</a>
+                        <a href="/gallery/">Gallery</a>
+                        <a href="/products/">Products</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="footer-title">Services</h5>
+                    <div class="footer-links">
+                        <a href="/products/">Marble Supply</a>
+                        <a href="/contact/">Custom Cutting</a>
+                        <a href="/contact/">Installation</a>
+                        <a href="/contact/">Export Services</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="footer-title">Stay Updated</h5>
+                    <p>Subscribe to our newsletter for latest collections and offers</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email address">
+                        <button class="btn btn-luxury">Subscribe</button>
+                    </div>
+                    <div class="mt-4">
+                        <p><i class="fas fa-phone me-2"></i> +92 315 8510208</p>
+                        <p><i class="fas fa-envelope me-2"></i> marblegallery2004@gmail.com</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Peshawar, Pakistan</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Marble Gallery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/background.js"></script>
+    
+    <script>
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    <script>
+    // Set active nav link based on current URL
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (currentPath === linkPath || (linkPath !== '/' && currentPath.startsWith(linkPath))) {
+            link.classList.add('active');
+        }
+    });
+</script>
+<script src="/static/js/background.js"></script>
+<script>
+// Set active nav link based on current URL
+const currentPath = window.location.pathname;
+const navLinks = document.querySelectorAll('.nav-link');
+
+navLinks.forEach(link => {
+    const linkPath = link.getAttribute('href');
+    if (linkPath === '/' && currentPath === '/') {
+        link.classList.add('active');
+    } else if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
+        link.classList.add('active');
+    } else {
+        link.classList.remove('active');
+    }
+});
+</script>
+</body>
+</html>

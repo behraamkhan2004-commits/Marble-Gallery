@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section with Rotating Background -->
+<style>
+    .category-card-link {
+    text-decoration: none;
+    display: block;
+}
+
+.category-card-luxury {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.category-card-link:hover .category-card-luxury {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+.luxury-hero {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 1s ease-in-out;
+    padding: 120px 0 80px;
+    color: white;
+    min-height: 600px;
+    width: 100%;
+}
+</style>
+
+<section class="luxury-hero" id="home" style="background: linear-gradient(rgba(44,44,44,0.85), rgba(44,44,44,0.75)), url('/static/images/backgrounds/bg1.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="hero-title">ELEGANCE IN EVERY STONE</h1>
+                <p class="hero-subtitle">Discover Pakistan's finest marble collection. Luxury meets craftsmanship in every slab we provide.</p>
+                <div>
+                    <a href="/products/" class="btn-luxury me-3"><i class="fas fa-gem me-2"></i>Explore Collection</a>
+                    <a href="/contact/" class="btn-outline-light"><i class="fas fa-phone-alt me-2"></i>Consult Expert</a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="row hero-stats mt-5">
+                    <div class="col-md-3 col-6 text-center">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Marble Varieties</div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Verified Suppliers</div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Premium Collections -->
+<!-- Premium Collections -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <!-- Premium Collections -->
+<section class="premium-collections">
+    <div class="container">
+        <div class="section-title">
+            <h2>PREMIUM MARBLE COLLECTIONS</h2>
+            <p>Explore our exquisite range of premium marble from across Pakistan</p>
+        </div>
+        
+        <div class="row">
+            <!-- White Marble -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/products/category/white-marble/" class="category-card-link">
+                    <div class="category-card-luxury">
+                        <img src="/static/images/categories/white-marble.jpg" alt="White Marble" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">White Marble</h3>
+                            <p class="category-subtitle">سفید ماربل</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Beige Marble -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/products/category/beige-marble/" class="category-card-link">
+                    <div class="category-card-luxury">
+                        <img src="/static/images/categories/beige-marble.avif" alt="Beige Marble" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Beige Marble</h3>
+                            <p class="category-subtitle">بیج ماربل</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Black Marble -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/products/category/black-marble/" class="category-card-link">
+                    <div class="category-card-luxury">
+                        <img src="/static/images/categories/black-marble.avif" alt="Black Marble" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Black Marble</h3>
+                            <p class="category-subtitle">سیاہ ماربل</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Colored Marble -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/products/category/colored-marble/" class="category-card-link">
+                    <div class="category-card-luxury">
+                        <img src="/static/images/categories/colored-marble.jpg" alt="Colored Marble" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Colored Marble</h3>
+                            <p class="category-subtitle">رنگین ماربل</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured Products -->
+<section class="section-padding" style="background: linear-gradient(135deg, #F8F5F0 0%, #E6D5B8 100%);">
+    <div class="container">
+        <div class="section-title">
+            <h2>FEATURED PRODUCTS</h2>
+            <p>Handpicked selection of our finest marble slabs</p>
+        </div>
+        
+        <div class="row">
+            {% for product in featured_products %}
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card-luxury">
+                    <div class="product-badge">
+                        {% if forloop.counter == 1 %}Best Seller{% elif forloop.counter == 2 %}Premium{% else %}New Arrival{% endif %}
+                    </div>
+                    <div class="product-image-container">
+                        {% if product.main_image %}
+                            <img src="{{ product.main_image.url }}" alt="{{ product.name_en }}" class="product-image">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="{{ product.name_en }}" class="product-image">
+                        {% endif %}
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-title">{{ product.name_en }}</h4>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            <span class="ms-2">(4.8)</span>
+                        </div>
+                        <div class="product-price">PKR {{ product.price_per_sqft }}/sq ft</div>
+                        <a href="/product/{{ product.slug }}/" class="btn-luxury w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card-luxury">
+                    <div class="product-badge">Best Seller</div>
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Calacatta Gold" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-title">Calacatta Gold</h4>
+                        <div class="product-rating">★★★★☆ (4.8)</div>
+                        <div class="product-price">PKR 12,500/sq ft</div>
+                        <a href="#" class="btn-luxury w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card-luxury">
+                    <div class="product-badge">Premium</div>
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Carrara White" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-title">Carrara White</h4>
+                        <div class="product-rating">★★★★★ (5.0)</div>
+                        <div class="product-price">PKR 9,800/sq ft</div>
+                        <a href="#" class="btn-luxury w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card-luxury">
+                    <div class="product-badge">New Arrival</div>
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Absolute Black" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-title">Absolute Black</h4>
+                        <div class="product-rating">★★★★★ (5.0)</div>
+                        <div class="product-price">PKR 15,200/sq ft</div>
+                        <a href="#" class="btn-luxury w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/products/" class="btn-luxury btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>WHY CHOOSE MARBLE GALLERY</h2>
+            <p>Excellence in every aspect of our service</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-card-luxury">
+                    <div class="feature-icon"><i class="fas fa-medal"></i></div>
+                    <h4>PREMIUM QUALITY</h4>
+                    <p>Grade A marble with certified quality standards</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-card-luxury">
+                    <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                    <h4>VERIFIED SUPPLIERS</h4>
+                    <p>All suppliers are certified and regularly audited</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-card-luxury">
+                    <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                    <h4>NATIONWIDE DELIVERY</h4>
+                    <p>Safe and secure delivery across Pakistan</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-card-luxury">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h4>EXPERT SUPPORT</h4>
+                    <p>24/7 customer support and expert consultation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="luxury-cta">
+    <div class="container">
+        <h2 class="cta-title">TRANSFORM YOUR SPACE WITH ELEGANCE</h2>
+        <p class="mb-4">Get expert consultation and free marble samples for your project</p>
+        <a href="/contact/" class="btn-luxury btn-lg">Request Free Consultation</a>
+    </div>
+</section>
+
+<script>
+// Rotating Background Images - Changes every 5 seconds
+const bgImages = [
+    '/static/images/backgrounds/bg1.jpg',
+    '/static/images/backgrounds/bg2.jpg',
+    '/static/images/backgrounds/bg3.png',
+    '/static/images/backgrounds/bg4.jpg'
+];
+let idx = 0;
+
+setInterval(function() {
+    const hero = document.querySelector('.luxury-hero');
+    if (hero) {
+        hero.style.backgroundImage = "linear-gradient(rgba(44,44,44,0.85), rgba(44,44,44,0.75)), url('" + bgImages[idx] + "')";
+        hero.style.backgroundSize = "cover";
+        hero.style.backgroundPosition = "center center";
+        hero.style.backgroundRepeat = "no-repeat";
+        idx = (idx + 1) % bgImages.length;
+    }
+}, 5000);
+</script>
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-gem login-icon"></i>
+            <h2>Welcome Back!</h2>
+            <p>Login to your Marble Gallery account</p>
+        </div>
+        
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="username" class="login-input" placeholder="Username" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" class="login-input" placeholder="Password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+   <div class="social-login-section">
+    <hr>
+    <p class="text-center">Or register with</p>
+    <div class="social-buttons">
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google">
+            <i class="fab fa-google"></i> Google
+        </a>
+        <a href="{% url 'social:begin' 'facebook' %}" class="btn-facebook">
+            <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+    </div>
+</div>
+        
+        <div class="social-login">
+            <hr>
+            <p class="text-center">Or login with</p>
+            <div class="d-flex gap-3">
+                <a href="#" class="btn-google w-50 text-center text-decoration-none">
+                    <i class="fab fa-google me-2"></i> Google
+                </a>
+                <a href="#" class="btn-facebook w-50 text-center text-decoration-none">
+                    <i class="fab fa-facebook-f me-2"></i> Facebook
+                </a>
+            </div>
+        </div>
+        
+        <div class="login-footer">
+            <p>Don't have an account? <a href="/users/register/">Register here</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 40px 20px;
+    }
+    
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .login-icon {
+        font-size: 60px;
+        color: #c9a03d;
+        margin-bottom: 15px;
+    }
+    
+    .login-header h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 8px;
+    }
+    
+    .login-header p {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .login-form {
+        margin-bottom: 20px;
+    }
+    
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #c9a03d;
+        font-size: 18px;
+    }
+    
+    .login-input {
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s;
+        outline: none;
+    }
+    
+    .login-input:focus {
+        border-color: #c9a03d;
+        box-shadow: 0 0 0 3px rgba(201,160,61,0.1);
+    }
+    
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #c9a03d 0%, #a8862c 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(201,160,61,0.3);
+    }
+    
+    /* Social Login Styles */
+    .social-login {
+        margin-top: 20px;
+    }
+    
+    .social-login hr {
+        margin: 15px 0;
+        border-color: #e0e0e0;
+    }
+    
+    .social-login p {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .btn-google {
+        background: #DB4437;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .btn-google:hover {
+        background: #c53929;
+        transform: translateY(-2px);
+        color: white;
+    }
+    
+    .btn-facebook {
+        background: #4267B2;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .btn-facebook:hover {
+        background: #365899;
+        transform: translateY(-2px);
+        color: white;
+    }
+    
+    .login-footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        margin-top: 20px;
+    }
+    
+    .login-footer p {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .login-footer a {
+        color: #c9a03d;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+    
+    .d-flex {
+        display: flex;
+    }
+    
+    .gap-3 {
+        gap: 15px;
+    }
+    
+    .w-50 {
+        width: 50%;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    .text-decoration-none {
+        text-decoration: none;
+    }
+    
+    .me-2 {
+        margin-right: 8px;
+    }
+</style>
+{% endblock %}

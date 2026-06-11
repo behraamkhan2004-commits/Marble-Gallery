@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Order #{{ order.order_number }}</h1>
+                <a href="/orders/history/" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Orders
+                </a>
+                <a href="{% url 'orders:download_invoice' order.id %}" class="btn btn-gold">
+    <i class="fas fa-download me-2"></i>Download Invoice (PDF)
+</a>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Order Items</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.items.all %}
+                                        <tr>
+                                            <td>{{ item.product.name_en }}<br><small class="text-muted">SKU: {{ item.product.sku }}</small></td>
+                                            <td>{{ item.quantity }} sq.ft</td>
+                                            <td>PKR {{ item.price_at_time }}/sq.ft</td>
+                                            <td>PKR {{ item.total_price }}</td>
+                                         </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr><td colspan="3" class="text-end"><strong>Subtotal:</strong></td><td>PKR {{ order.subtotal }}</td></tr>
+                                        <tr><td colspan="3" class="text-end"><strong>Shipping:</strong></td><td>PKR {{ order.shipping_cost }}</td></tr>
+                                        <tr><td colspan="3" class="text-end"><strong>Total:</strong></td><td><strong class="text-gold">PKR {{ order.total }}</strong></td></tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Order Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <span class="badge {% if order.order_status == 'delivered' %}bg-success{% elif order.order_status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %} fs-6 p-2">
+                                    {{ order.get_order_status_display }}
+                                </span>
+                            </div>
+                            <div class="progress mb-3" style="height: 8px;">
+                                <div class="progress-bar bg-gold" role="progressbar" style="width: {{ progress_percentage }}%"></div>
+                            </div>
+                            <a href="/orders/track/?order_number={{ order.order_number }}" class="btn btn-outline-gold w-100">Track Order</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Shipping Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Payment Method:</strong> {{ order.payment_method|title }}</p>
+                            <p><strong>Order Date:</strong> {{ order.created_at|date:"F d, Y" }}</p>
+                            {% if order.tracking_number %}
+                            <p><strong>Tracking #:</strong> {{ order.tracking_number }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-gold, .bg-gold { background: #c9a03d; }
+    .btn-gold:hover { background: #a8862c; color: white; }
+    .btn-outline-gold { border: 2px solid #c9a03d; color: #c9a03d; }
+    .btn-outline-gold:hover { background: #c9a03d; color: white; }
+    .text-gold { color: #c9a03d; }
+</style>
+{% endblock %}

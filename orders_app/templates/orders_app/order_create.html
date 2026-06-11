@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Checkout</h1>
+    
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Delivery Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="checkoutForm">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Full Name *</label>
+                                <input type="text" name="full_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mobile Number *</label>
+                                <input type="tel" name="mobile_number" class="form-control" placeholder="03001234567" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">CNIC *</label>
+                                <input type="text" name="cnic" class="form-control" placeholder="12345-6789012-3" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">City *</label>
+                                <select name="city" class="form-select" id="citySelect" required>
+                                    <option value="">Select City</option>
+                                    {% for city in cities %}
+                                    <option value="{{ city.city }}" data-cost="{{ city.cost }}">{{ city.city }} - PKR {{ city.cost }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">District *</label>
+                                <input type="text" name="district" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Postal Code</label>
+                                <input type="text" name="postal_code" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Complete Address *</label>
+                            <textarea name="address" class="form-control" rows="3" placeholder="House #, Street, Area" required></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Payment Method *</label>
+                            <div class="row">
+                                <div class="col-md-3 mb-2">
+                                    <div class="payment-option" onclick="selectPayment('cod')">
+                                        <div class="card text-center p-2">
+                                            <i class="fas fa-money-bill-wave fa-2x text-success"></i>
+                                            <small>Cash on Delivery</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="payment-option" onclick="selectPayment('jazzcash')">
+                                        <div class="card text-center p-2">
+                                            <i class="fab fa-cc-visa fa-2x text-primary"></i>
+                                            <small>JazzCash</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="payment-option" onclick="selectPayment('easypaisa')">
+                                        <div class="card text-center p-2">
+                                            <i class="fab fa-cc-mastercard fa-2x text-danger"></i>
+                                            <small>EasyPaisa</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="payment-option" onclick="selectPayment('bank')">
+                                        <div class="card text-center p-2">
+                                            <i class="fas fa-university fa-2x text-info"></i>
+                                            <small>Bank Transfer</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="payment_method" id="selectedPayment" required>
+                        </div>
+                        
+                        <div id="bankDetails" style="display: none;" class="alert alert-info">
+                            <strong>Bank Account Details:</strong><br>
+                            Bank: MCB Bank<br>
+                            Account Title: Marble Gallery<br>
+                            Account Number: 12345678901234<br>
+                            IBAN: PK36MCB1234567890123456
+                        </div>
+                        
+                        <button type="submit" class="btn btn-gold w-100 py-2">
+                            <i class="fas fa-check-circle me-2"></i>Place Order
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in cart %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ item.product.name_en }} x {{ item.quantity }} sq.ft</span>
+                        <span>PKR {{ item.total_price }}</span>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>PKR {{ cart.get_total_price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping:</span>
+                        <span id="shippingAmount">PKR 0</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong class="text-gold fs-5" id="totalAmount">PKR {{ cart.get_total_price }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-gold {
+        background: #c9a03d;
+        color: white;
+    }
+    .btn-gold:hover {
+        background: #a8862c;
+        color: white;
+    }
+    .text-gold {
+        color: #c9a03d;
+    }
+    .payment-option {
+        cursor: pointer;
+    }
+    .payment-option .card {
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+    .payment-option.selected .card {
+        border-color: #c9a03d;
+        background: #fff8e7;
+    }
+    .payment-option:hover .card {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+
+<script>
+    function selectPayment(method) {
+        document.getElementById('selectedPayment').value = method;
+        
+        // Remove selected class from all
+        document.querySelectorAll('.payment-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked
+        event.currentTarget.classList.add('selected');
+        
+        // Show bank details if bank transfer selected
+        if (method === 'bank') {
+            document.getElementById('bankDetails').style.display = 'block';
+        } else {
+            document.getElementById('bankDetails').style.display = 'none';
+        }
+    }
+    
+    // Calculate shipping
+    document.getElementById('citySelect').addEventListener('change', function() {
+        const selected = this.options[this.selectedIndex];
+        const cost = selected.getAttribute('data-cost');
+        const subtotal = {{ cart.get_total_price }};
+        
+        if (cost) {
+            const shipping = parseInt(cost);
+            document.getElementById('shippingAmount').innerText = 'PKR ' + shipping;
+            document.getElementById('totalAmount').innerText = 'PKR ' + (subtotal + shipping);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- About Header -->
+<section class="about-header">
+    <div class="container">
+        <h1 class="about-title">About Marble Gallery</h1>
+        <p class="about-subtitle">Pakistan's premier marble marketplace since 2008</p>
+    </div>
+</section>
+
+<!-- About Content -->
+<section class="about-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Our Story</h2>
+                <p>Marble Gallery was founded with a vision to bring Pakistan's finest natural stone to customers across the nation. What started as a small operation has grown into the country's most trusted marble marketplace.</p>
+                <p>We work directly with verified quarries to ensure the highest quality marble reaches our customers. Every slab is carefully inspected before delivery.</p>
+                <p>Our commitment to excellence has made us the preferred choice for architects, builders, and homeowners throughout Pakistan.</p>
+            </div>
+            <div class="col-lg-6">
+              <img src="/static/images/about.png" alt="About Marble Gallery" class="about-image">
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="about-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>Premium Quality</h3>
+                    <p>Grade A marble from top quarries</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="about-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Fast Delivery</h3>
+                    <p>Nationwide shipping across Pakistan</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="about-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Expert Support</h3>
+                    <p>24/7 customer assistance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.about-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+}
+
+.about-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.about-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.about-content {
+    padding: 60px 0;
+    background: #f8f9fa;
+}
+
+.about-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+}
+
+.about-content p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.about-image {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.about-card {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.about-card i {
+    font-size: 45px;
+    color: #c9a03d;
+    margin-bottom: 15px;
+}
+
+.about-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+</style>
+{% endblock %}

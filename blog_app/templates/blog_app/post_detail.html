@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blog-detail-page">
+    <div class="container">
+        <!-- Back Button -->
+        <div class="back-button">
+            <a href="/blog/">&larr; Back to Blog</a>
+        </div>
+        
+        <!-- Article Header -->
+        <div class="article-header">
+            <div class="article-category">{{ post.get_category_display }}</div>
+            <h1 class="article-title">{{ post.title }}</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar-alt"></i> {{ post.created_at|date:"F d, Y" }}</span>
+                <span><i class="far fa-clock"></i> 8 min read</span>
+                <span><i class="fas fa-eye"></i> 1.2k views</span>
+            </div>
+        </div>
+        
+        <!-- Featured Image -->
+        <div class="article-image">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            {% else %}
+                <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="{{ post.title }}">
+            {% endif %}
+        </div>
+        
+        <!-- Article Content -->
+        <div class="article-content">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <!-- Share Section -->
+        <div class="share-section">
+            <h4>Share this article</h4>
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+        
+        <!-- Related Posts -->
+        {% if related_posts %}
+        <div class="related-posts">
+            <h3>Related Articles</h3>
+            <div class="row g-4">
+                {% for related in related_posts %}
+                <div class="col-md-4">
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c33?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="{{ related.title }}">
+                        </div>
+                        <div class="related-body">
+                            <h4>{{ related.title }}</h4>
+                            <a href="/blog/{{ related.slug }}/" class="related-link">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .blog-detail-page {
+        background: #f8f9fa;
+        padding: 40px 0;
+    }
+    
+    .back-button {
+        margin-bottom: 30px;
+    }
+    
+    .back-button a {
+        color: #c9a03d;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .article-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .article-category {
+        display: inline-block;
+        background: #c9a03d;
+        color: #1a1a2e;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .article-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 20px;
+    }
+    
+    .article-meta {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .article-meta i {
+        color: #c9a03d;
+        margin-right: 5px;
+    }
+    
+    .article-image {
+        margin: 30px 0;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    
+    .article-image img {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+    }
+    
+    .article-content {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        line-height: 1.8;
+        font-size: 18px;
+        color: #333;
+    }
+    
+    .share-section {
+        text-align: center;
+        margin: 40px 0;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+    }
+    
+    .share-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .share-btn {
+        padding: 10px 20px;
+        border-radius: 40px;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    
+    .share-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .facebook { background: #3b5998; }
+    .twitter { background: #1da1f2; }
+    .whatsapp { background: #25D366; }
+    
+    .related-posts {
+        margin-top: 40px;
+    }
+    
+    .related-posts h3 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+    
+    .related-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+    
+    .related-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .related-image {
+        height: 180px;
+        overflow: hidden;
+    }
+    
+    .related-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .related-body {
+        padding: 20px;
+    }
+    
+    .related-body h4 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .related-link {
+        color: #c9a03d;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+        .article-title {
+            font-size: 28px;
+        }
+        .article-content {
+            padding: 20px;
+            font-size: 16px;
+        }
+        .share-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+{% endblock %}

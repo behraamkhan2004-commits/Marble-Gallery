@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-credit-card me-2"></i>Select Payment Method</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" id="paymentForm">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card payment-card" onclick="selectPayment('cod')">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-money-bill-wave fa-3x text-success mb-2"></i>
+                                            <h6>Cash on Delivery</h6>
+                                            <small>Pay when you receive</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card payment-card" onclick="selectPayment('jazzcash')">
+                                        <div class="card-body text-center">
+                                            <i class="fab fa-cc-visa fa-3x text-primary mb-2"></i>
+                                            <h6>JazzCash</h6>
+                                            <small>Mobile Account / Card</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card payment-card" onclick="selectPayment('easypaisa')">
+                                        <div class="card-body text-center">
+                                            <i class="fab fa-cc-mastercard fa-3x text-danger mb-2"></i>
+                                            <h6>EasyPaisa</h6>
+                                            <small>Mobile Account / Card</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card payment-card" onclick="selectPayment('bank')">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-university fa-3x text-info mb-2"></i>
+                                            <h6>Bank Transfer</h6>
+                                            <small>Direct bank deposit</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" name="payment_method" id="selected_payment" required>
+                        
+                        <div id="paymentDetails" style="display: none;">
+                            <div class="alert alert-info">
+                                <p id="paymentInstruction"></p>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                            <i class="fas fa-check-circle me-2"></i>Pay Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Order Total:</strong> PKR {{ total }}</p>
+                    <hr>
+                    <p class="text-muted small">Your payment information is secure. We use encryption to protect your data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-card {
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid #ddd;
+    }
+    .payment-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .payment-card.selected {
+        border-color: #28a745;
+        background-color: #f0fff4;
+    }
+</style>
+
+<script>
+    function selectPayment(method) {
+        document.getElementById('selected_payment').value = method;
+        
+        // Remove selected class from all cards
+        document.querySelectorAll('.payment-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked card
+        event.currentTarget.classList.add('selected');
+        
+        // Show payment instructions
+        let instruction = '';
+        let redirectUrl = '';
+        
+        if (method === 'cod') {
+            instruction = 'You will pay cash when the product is delivered to your address.';
+            redirectUrl = '/payments/cod/{{ order_id }}/';
+        } else if (method === 'jazzcash') {
+            instruction = 'You will be redirected to JazzCash payment page to complete your transaction.';
+            redirectUrl = '/payments/jazzcash/{{ order_id }}/';
+        } else if (method === 'easypaisa') {
+            instruction = 'You will be redirected to EasyPaisa payment page to complete your transaction.';
+            redirectUrl = '/payments/easypaisa/{{ order_id }}/';
+        } else if (method === 'bank') {
+            instruction = 'Bank: MCB Bank | Account: 123456789 | Title: Marble Gallery | Send screenshot after payment to info@marblegallery.com';
+            redirectUrl = '#';
+        }
+        
+        document.getElementById('paymentInstruction').innerHTML = instruction;
+        document.getElementById('paymentDetails').style.display = 'block';
+        
+        // Auto redirect for digital payments
+        if (method === 'jazzcash' || method === 'easypaisa') {
+            setTimeout(function() {
+                window.location.href = redirectUrl;
+            }, 1500);
+        }
+    }
+</script>
+{% endblock %}
