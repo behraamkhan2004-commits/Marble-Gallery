@@ -1,10 +1,4 @@
-﻿Django==4.2.11
+Django==4.2.11
 gunicorn==21.2.0
 whitenoise==6.6.0
 Pillow==10.2.0
-dj-database-url==2.1.0
-psycopg2-binary==2.9.9
-django-crispy-forms==2.1
-crispy-bootstrap5==0.7
-social-auth-app-django==5.4.0
-reportlab==4.0.9
