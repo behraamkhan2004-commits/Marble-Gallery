@@ -1,4 +1,4 @@
-﻿import os
+import os
 import dj_database_url
 """
 Django settings for config project.
@@ -126,3 +126,4 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+
